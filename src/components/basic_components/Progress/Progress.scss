@@ -1,0 +1,28 @@
+.progress-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 6px;
+
+  .bar {
+    flex: 1;
+    height: 100%;
+    border-radius: 10px;
+    background: #f5f5f5;
+  }
+
+  .value {
+    width: 60%;
+    height: 100%;
+    border-radius: 10px;
+    background: #79dadf;
+  }
+
+  span.progress-num {
+    width: 2rem;
+    margin-left: 0.5rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+
+}

@@ -1,0 +1,13 @@
+.projectContainer-wrapper {
+  display: flex;
+  height: 100vh;
+
+  .projectContainer-menu {
+    width: 200px
+  }
+
+  .projectContainer-list {
+    flex: 1;
+    border: 1px solid #ccc;
+  }
+}

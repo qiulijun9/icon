@@ -1,0 +1,47 @@
+.bs-dialog-wrap {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.bs-dialog {
+  position: fixed;
+  min-width: 30vw;
+  min-height: 30vh;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #eee;
+  border-radius: 8px;
+}
+
+.bs-dialog-close {
+  height: 20px;
+  border-style: none;
+  background: #eee;
+  font-size: 20px;
+  color: rgb(156, 154, 154);
+}
+
+.bs-dialog-content {
+  height: 200px;
+}
+
+.bs-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.bs-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.bs-dialog-confirm {
+  margin-left: 20px;
+}
