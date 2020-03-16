@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Menu.scss';
 
@@ -14,6 +14,7 @@ export interface Navigation {
   type: 'Team' | 'Personal';
   primaryNavigation: string;
   secondaryNavigation: Array<MenuType>;
+  [key: string]: any;
 }
 
 const Menu = (props: Props) => {
@@ -32,28 +33,25 @@ const Menu = (props: Props) => {
   }
   return (
     <div>
-      {data &&
-        data.map((item, index) => (
-          <div key={index}>
-            <button className="menu-btn" onClick={() => handleDisplayMenuList(item.type)}>
-              {item.primaryNavigation}
-            </button>
-            {item?.secondaryNavigation.map((project, index) => {
-              return (
-                <div
-                  style={{
-                    display: eval(`show${item.type}Menu`) ? 'block' : 'none',
-                    marginLeft: '8px'
-                  }}
-                  key={index}
-                  onClick={() => handleShowProject(project.projectId)}
-                >
-                  {project.projectName}
-                </div>
-              );
-            })}
-          </div>
-        ))}
+      {data?.map((item, index) => (
+        <div key={index}>
+          <button className="menu-btn" onClick={() => handleDisplayMenuList(item.type)}>
+            {item.primaryNavigation}
+          </button>
+          {item?.secondaryNavigation.map((project, index) => (
+            <div
+              style={{
+                display: eval(`show${item.type}Menu`) ? 'block' : 'none',
+                marginLeft: '8px'
+              }}
+              key={index}
+              onClick={() => handleShowProject(project.projectId)}
+            >
+              {project.projectName}
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   );
 };

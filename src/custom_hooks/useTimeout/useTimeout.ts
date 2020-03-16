@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback } from 'react';
 
 export type Fn<T extends any[]> = (...args: T) => any;
 

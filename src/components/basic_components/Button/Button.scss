@@ -2,8 +2,13 @@
   width: 100px;
   height: 40px;
   color: #fff;
-  background-color: blue;
+  background-color: rgb(108, 204, 233);
   border-radius: 4px;
+  border-style: none;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 5px;
+  outline: none;
 }
 
 .button-basic-warning {
@@ -11,7 +16,11 @@
 }
 
 .button-basic-danger {
-  background-color: red;
+  background-color: rgb(236, 83, 83);
+}
+
+.button-basic-default {
+  background-color: rgb(199, 196, 196);
 }
 
 .button-basic-sm {

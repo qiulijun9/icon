@@ -1,0 +1,60 @@
+ .dialog-content {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   flex: 1;
+   padding: 0 2rem 2rem;
+
+   .dialog-upload {
+     margin-top: 20px;
+     border: 1px solid #fff;
+     width: 100%;
+   }
+
+   .progress {
+     flex: 1;
+     min-height: 15rem;
+     max-height: 20rem;
+     margin-top: 1rem;
+     padding-right: 5px;
+     border: 1px solid #eee;
+     border-radius: 10px;
+     overflow-y: auto;
+
+     &::-webkit-scrollbar {
+       width: 5px;
+     }
+   }
+
+   .file-progress-container {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     height: 2rem;
+     margin: 1rem 0;
+     padding: 0 1rem;
+   }
+
+   .control {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: calc(100% - 2.5rem);
+     height: 1rem;
+     font-size: 1rem;
+     color: #555;
+
+     span.file-name {
+       width: 50%;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       white-space: nowrap;
+     }
+
+     .toolTip {
+       display: flex;
+       justify-content: flex-end;
+       width: 2rem;
+     }
+   }
+ }

@@ -1,0 +1,26 @@
+.project-icon-btn-container {
+  display: flex;
+  border: 1px solid #eee;
+
+  .project-tool {
+    padding-top: 10px;
+    width: 100px;
+
+  }
+
+  .btn-operation {
+    margin-top: 10px;
+    border: none;
+    outline: none;
+    background: #fff;
+
+    &:hover svg.icon {
+      color: #3ebcee;
+    }
+
+
+  }
+
+
+
+}

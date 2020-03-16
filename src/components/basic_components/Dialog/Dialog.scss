@@ -1,47 +1,63 @@
-.bs-dialog-wrap {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-}
+ .bs-dialog-wrap {
+   position: fixed;
+   width: 100vw;
+   height: 100vh;
+   top: 0;
+   left: 0;
+   background-color: rgba(0, 0, 0, 0.4);
+   opacity: 0;
+ }
 
-.bs-dialog {
-  position: fixed;
-  min-width: 30vw;
-  min-height: 30vh;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #eee;
-  border-radius: 8px;
-}
+ .bs-dialog-wrap-show {
+   opacity: 1;
+   transition: opacity 0.5s;
+ }
 
-.bs-dialog-close {
-  height: 20px;
-  border-style: none;
-  background: #eee;
-  font-size: 20px;
-  color: rgb(156, 154, 154);
-}
+ .bs-dialog-wrap-hide {
+   opacity: 0;
+   transition: opacity 0.5s;
+ }
 
-.bs-dialog-content {
-  height: 200px;
-}
+ .bs-dialog {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   position: absolute;
+   min-width: 30rem;
+   min-height: 15rem;
+   top: 40%;
+   left: 50%;
+   border-radius: 5px;
+   transform: translate(-50%, -50%);
+   background: #FFF;
+ }
 
-.bs-dialog-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-}
+ .bs-dialog-close {
+   height: 20px;
+   border-style: none;
+   outline: none;
+   background: #fff;
+   font-size: 20px;
+   color: rgb(156, 154, 154);
+   margin-right: 20px;
+ }
 
-.bs-dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px;
-}
+ .bs-dialog-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   height: 4rem;
+   padding-left: 1rem;
+ }
 
-.bs-dialog-confirm {
-  margin-left: 20px;
-}
+ h2.bs-dialog-title {
+   font-size: 1.1rem;
+   font-weight: 400;
+ }
+
+ .bs-dialog-footer {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   height: 4rem;
+ }

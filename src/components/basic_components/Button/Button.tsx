@@ -1,7 +1,7 @@
 import React from 'react';
 import './Button.scss';
 
-export type ButtonType = 'primary' | 'warning' | 'danger';
+export type ButtonType = 'primary' | 'warning' | 'danger' | 'default';
 export type ButtonSize = 'sm' | 'xm' | 'lg';
 interface Props {
   text: string;

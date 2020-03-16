@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.icon {
+  width: 2em;
+  height: 2em;
+  vertical-align: -0.15em;
+  color: #777;
+  fill: currentColor;
+  overflow: hidden;
+  cursor: pointer;
+}
