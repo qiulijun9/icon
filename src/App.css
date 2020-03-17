@@ -32,7 +32,13 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+:root {
+  --default_bg_color: #fff;
+  --black_bg_color: #4a4a4a;
 }

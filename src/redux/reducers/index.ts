@@ -1,6 +1,14 @@
 import { combineReducers } from 'redux';
-import { grouping } from './groupReducer';
+import { isGrouping } from './groupReducer';
+import { dragReducer } from './dragReducer';
+import { currentProjectReducer } from './currentProjectReducer';
+import { isBlackThemeReducer } from './isBlackThemeReducer';
 
-export default combineReducers({
-  grouping
+const reducer = combineReducers({
+  isGrouping: isGrouping,
+  isDraging: dragReducer,
+  currentProject: currentProjectReducer,
+  isBlackTheme: isBlackThemeReducer
 });
+
+export default reducer;

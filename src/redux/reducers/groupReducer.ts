@@ -6,7 +6,7 @@ interface groupAction {
   data: boolean;
 }
 
-export function grouping(state = states.isGrouping, action: groupAction): boolean {
+export function isGrouping(state = states.isGrouping, action: groupAction): boolean {
   switch (action.type) {
     case IS_GROUPING:
       return action.data;

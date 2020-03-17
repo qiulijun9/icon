@@ -3,15 +3,26 @@ export interface Drag {
   shoppingCart: boolean;
 }
 
-export interface States {
+export interface CurrentProject {
+  projectId?: string;
+  projectName?: string;
+  projectType?: string;
+  iconType?: string;
+  members?: Array<string>;
+  icons?: Array<string>;
+  link?: string;
+}
+
+export interface State {
   isGrouping: boolean;
-  drag: Drag;
+  isDraging: boolean;
+  currentProject: CurrentProject;
+  isBlackTheme: boolean;
 }
 
 export default {
   isGrouping: false,
-  drag: {
-    group: false,
-    shoppingCart: false
-  }
+  isDraging: false,
+  currentProject: {},
+  isBlackTheme: false
 };

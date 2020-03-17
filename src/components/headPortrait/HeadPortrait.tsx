@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './HeadPortrait.scss';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { State } from '../../redux/state';
 import { Menu, Dialog, DragContainer } from '../basic_components/index';
 import { Navigation } from '../basic_components/Menu/Menu';
-
+import './HeadPortrait.scss';
 interface Props {
   username?: string;
   avatar?: string;
@@ -25,11 +26,19 @@ let defaultMenu = [
 ];
 const HeadPortrait = (props: Props) => {
   const [display, setDisplay] = useState(false);
-  const canvasContainer = useRef(null);
-  const previewContainer = useRef(null);
   const [menuJson, setMenuJson]: [Array<Navigation>, Function] = useState([]);
-  let isGrouping = window.localStorage.getItem('isGrouping');
-  console.log(222, isGrouping);
+  const { isGrouping, isDraging } = useSelector((state: State) => {
+    return {
+      isGrouping: state?.isGrouping,
+      isDraging: state?.isDraging
+    };
+  });
+
+  const dispatch = useDispatch();
+  const handleDrag = useCallback(() => {
+    dispatch({ type: 'IS_DRAGING', data: true });
+  }, [dispatch]);
+
   useEffect(() => {
     setMenuJson(defaultMenu);
   }, []);
@@ -58,11 +67,7 @@ const HeadPortrait = (props: Props) => {
                 padding: '0 2rem 1rem'
               }}
             >
-              <div
-                className="canvasContainer"
-                style={{ width: '70%', height: '100%' }}
-                ref={canvasContainer}
-              >
+              <div className="canvasContainer" style={{ width: '70%', height: '100%' }}>
                 222
               </div>
               <div
@@ -74,7 +79,6 @@ const HeadPortrait = (props: Props) => {
                   width: '30%',
                   height: '100%'
                 }}
-                ref={previewContainer}
               >
                 222
               </div>
@@ -93,16 +97,27 @@ const HeadPortrait = (props: Props) => {
           <Menu data={menuJson} />
         </div>
       </div>
-      <div className="isGroupingContainer">
-        <DragContainer
-          rootStyle={{ width: '8rem', marginBottom: '2rem' }}
-          dragBarStyle={{ width: '7rem' }}
-          dragData={'sss'}
-          // draggable={isGrouping}
-        >
-          <img className="icon" src="/img/dog.jpg" alt="img" draggable={false} />
-        </DragContainer>
-      </div>
+      {isGrouping && (
+        <div className="isGroupingContainer">
+          <DragContainer
+            // rootStyle={{ width: '7rem', marginBottom: '2rem' }}
+            dragBarStyle={{ width: '7rem' }}
+            dragData={'sss'}
+            // draggable={isGrouping}
+          >
+            <img
+              className="icon"
+              style={{
+                border: isDraging ? '2px solid #e94d0f' : 'none'
+              }}
+              src="/img/dog.jpg"
+              alt="img"
+              draggable={false}
+              onClick={() => handleDrag()}
+            />
+          </DragContainer>
+        </div>
+      )}
     </>
   );
 };

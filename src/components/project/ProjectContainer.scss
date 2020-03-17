@@ -1,9 +1,10 @@
 .projectContainer-wrapper {
   display: flex;
   height: 100vh;
+  // background: var(--black_bg_color);
 
   .projectContainer-menu {
-    width: 200px
+    box-sizing: border-box;
   }
 
   .projectContainer-list {

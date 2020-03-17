@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { State } from '../../redux/state';
 import CreateProjectDialog from '../project/CreateProjectDialog';
 import UploadIconsDialog from '../icon/UploadIconsDialog';
-import Dialog from '../basic_components/Dialog/Dialog';
-import BackgroundPickerDialog from '../backgroundPicker/BackgroundPickerDialog';
+import { Dialog, Switch } from '../basic_components/index';
 import { useCopy } from '../../custom_hooks/index';
 import './NavigationButton.scss';
 const NavigationButton = () => {
@@ -10,7 +11,7 @@ const NavigationButton = () => {
   const [showProjectDialog, setShowProjectDialog] = useState(false);
   const [showUploadIconDialog, setShowUploadIconDialog] = useState(false);
   const [showDeleteProjectDialog, setShowDeleteProjectDialog] = useState(false);
-  const [showBackgroundrDialog, setShowBackgroundrDialog] = useState(false);
+
   function handleDownloadProject() {
     window.open(`http://www.baidu.com/img/baidu_jgylogo3.gif`, '_blank');
   }
@@ -18,6 +19,25 @@ const NavigationButton = () => {
     copyCode('nihao erer');
     alert('复制成功');
   }
+  const { currentProject, isBlackTheme } = useSelector((state: State) => {
+    return {
+      currentProject: state.currentProject,
+      isBlackTheme: state.isBlackTheme
+    };
+  });
+  const dispatch = useDispatch();
+  function changerTheme() {
+    dispatch({
+      type: 'IS_BLACK_THEME',
+      data: true
+    });
+    console.log(5555, isBlackTheme);
+  }
+
+  function deleteProject() {
+    console.log(333, currentProject.projectId);
+  }
+
   return (
     <div className="project-icon-btn-container">
       <div className="project-tool">
@@ -67,6 +87,7 @@ const NavigationButton = () => {
           title="删除项目"
           outsideClickCancel={true}
           onCancel={() => setShowDeleteProjectDialog(false)}
+          onConfirm={() => deleteProject()}
         >
           <div className="dialog-content">确定要删除项目吗？</div>
         </Dialog>
@@ -80,18 +101,6 @@ const NavigationButton = () => {
         </button>
       </div>
       <div className="project-tool">
-        <button className="btn-operation" onClick={() => setShowBackgroundrDialog(true)}>
-          <svg className="icon icon-operation" aria-hidden="true">
-            <use xlinkHref="#icon-yulanbeijingse" />
-          </svg>
-          调节背景色
-        </button>
-        <BackgroundPickerDialog
-          visible={showBackgroundrDialog}
-          callback={() => setShowBackgroundrDialog(false)}
-        />
-      </div>
-      <div className="project-tool">
         <button
           className="btn-operation"
           onClick={() => setShowDeleteProjectDialog(true)}
@@ -101,6 +110,9 @@ const NavigationButton = () => {
           </svg>
           模板代码
         </button>
+      </div>
+      <div>
+        <Switch onChange={() => changerTheme()} />
       </div>
     </div>
   );

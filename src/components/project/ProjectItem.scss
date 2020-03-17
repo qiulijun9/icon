@@ -29,7 +29,7 @@
   .icon-container {
     position: relative;
     width: 120px;
-    height: calc(100% - 1rem);
+    height: calc(100% - 1.5rem);
 
 
     &:hover {
@@ -37,6 +37,18 @@
         display: block;
       }
     }
+  }
+
+  .project-item {
+    border: 1px solid #eee;
+  }
+
+  .project-item-name {
+    margin-left: 20px;
+  }
+
+  .project-item-image {
+    min-height: 10px;
   }
 
 }

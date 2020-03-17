@@ -1,25 +1,50 @@
-import React, { useState } from 'react';
-// import { useSelector, useDispatch, useStore } from 'react-redux';
-// import { groupingStatusCreator } from '../../redux/action';
+import React, { useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import ShadeIcons from '../icon/ShadeIcons';
-import Button from '../basic_components/Button/Button';
+import { Button, Drag } from '../basic_components/index';
 import CreateGroupDialog from '../group/CreateGroupDialog';
 
 import './ProjectItem.scss';
 const ProjectItem = () => {
   const [showGroupDialog, setShowGroupDialog] = useState(false);
-  // const data = useSelector(groupingStatusCreator);
-  // console.log(data);
   const [imgIsGrouping, setImgIsGrouping] = useState(false);
-
-  function handlePictureGrouping() {
+  const { currentProject, isDraging } = useSelector(state => {
+    return state;
+  });
+  const dispatch = useDispatch();
+  const handlePictureGrouping = useCallback(() => {
+    dispatch({ type: 'IS_GROUPING', data: true });
     setImgIsGrouping(true);
-    window.localStorage.setItem('isGrouping', imgIsGrouping);
-  }
+  }, [dispatch]);
+
   const [active, setActive] = useState(false);
+
   function handleClick() {
     setActive(true);
   }
+
+  const currentProjectId = currentProject['projectId'];
+  console.log(222, currentProjectId);
+
+  const defaultProjects = {
+    '1': {
+      group1: {
+        imgs: [
+          { src: '/img/dog.jpg', imgName: 'wers', size: '20' },
+          { src: '/img/dog.jpg', imgName: '2', size: '20' }
+        ]
+      },
+      group2: {
+        imgs: [{ src: '/img/dog.jpg', imgName: 'wers', size: '20' }]
+      }
+    },
+    '2': {
+      group1: {
+        imgs: [{ src: '/img/dog.jpg', imgName: 'wers', size: '20' }]
+      }
+    }
+  };
+  console.log(Object.entries(defaultProjects['1']));
   return (
     <div>
       <div className="project-group-container">
@@ -42,7 +67,14 @@ const ProjectItem = () => {
             />
           </div>
         </div>
-        <div className="project-group">
+
+        {/* <Drag name="dropGroup" callback={() => {}}> */}
+        <div
+          className="project-group"
+          style={{
+            border: isDraging ? '1px solid #e94d0f' : 'none'
+          }}
+        >
           <figure
             className="icon-item"
             draggable={false}
@@ -57,6 +89,52 @@ const ProjectItem = () => {
             </div>
           </figure>
         </div>
+        {/* </Drag> */}
+        {/* {defaultProjects['1'].keys(item => {
+          return <div>dd</div>;
+        })} */}
+
+        {currentProjectId &&
+          Object.entries(defaultProjects[currentProjectId]).map((item, index) => {
+            return (
+              <div className="project-item" key={index}>
+                <div className="project-item-name">{item[0]}</div>
+                <div className="project-item-image">
+                  <div
+                    className="project-group"
+                    style={{
+                      border: isDraging ? '1px solid #e94d0f' : 'none'
+                    }}
+                  >
+                    {item[1].imgs.map((img, index) => {
+                      return (
+                        <figure
+                          key={index}
+                          className="icon-item"
+                          draggable={false}
+                          style={{
+                            border: active ? '1px solid #e94d0f' : 'none'
+                          }}
+                          onClick={() => handleClick()}
+                        >
+                          <div className="icon-container">
+                            <img
+                              className="icon"
+                              src={img.src}
+                              alt="img"
+                              draggable={false}
+                            />
+                            {img.imgName}
+                            {!imgIsGrouping && <ShadeIcons />}
+                          </div>
+                        </figure>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

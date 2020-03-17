@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { State } from '../../../redux/state';
 import './Menu.scss';
 
 export interface Props {
@@ -28,9 +30,26 @@ const Menu = (props: Props) => {
     if (type === 'Personal') setShowPersonalMenu(!showPersonalMenu);
   }
 
-  function handleShowProject(projectId: string) {
-    routerHistory.push(`/project/${projectId}`);
+  // const { currentProject } = useSelector((state: State) => {
+  //   return {
+  //     currentProject: state.currentProject
+  //   };
+  // });
+  const dispatch = useDispatch();
+  const setCurrentProjectInfo = useCallback(
+    projectInfo => {
+      dispatch({
+        type: 'CURRENT_PROJECT',
+        data: projectInfo
+      });
+    },
+    [dispatch]
+  );
+
+  function handleShowProject(projectInfo: Object) {
+    setCurrentProjectInfo(projectInfo);
   }
+
   return (
     <div>
       {data?.map((item, index) => (
@@ -45,7 +64,13 @@ const Menu = (props: Props) => {
                 marginLeft: '8px'
               }}
               key={index}
-              onClick={() => handleShowProject(project.projectId)}
+              onClick={() =>
+                handleShowProject({
+                  projectId: project.projectId,
+                  projectName: project.projectName,
+                  projectType: item.type
+                })
+              }
             >
               {project.projectName}
             </div>
