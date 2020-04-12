@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '../basic_components/Button/Button';
 
 const Login = () => {
-  console.log(111);
   function handleLogin() {
     let loginData = {
       username: 'qlj',

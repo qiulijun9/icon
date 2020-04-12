@@ -62,3 +62,33 @@
 .bs-animation-scale-hide {
   animation-name: scaleOut;
 }
+
+@keyframes rotateIn {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes rotateOut {
+  0% {
+    transform: rotate(45deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.bs-animation-rotate-show {
+  animation-name: rotateIn;
+  animation-duration: 2s;
+}
+
+.bs-animation-rotate-hide {
+  animation-name: rotateOut;
+  animation-duration: 2s;
+}

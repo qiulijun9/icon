@@ -9,6 +9,7 @@ const CreateGroupDialog = (props: Props) => {
   const { visible, callback } = props;
   return (
     <Dialog
+      animationType={'rotate'}
       visible={visible}
       title="创建分组"
       outsideClickCancel={true}

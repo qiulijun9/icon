@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { State } from '../../redux/state';
+import { projectContainerContext } from '../project/ProjectContainer';
 import { Menu, Dialog, DragContainer } from '../basic_components/index';
 import { Navigation } from '../basic_components/Menu/Menu';
 import './HeadPortrait.scss';
@@ -27,6 +28,7 @@ let defaultMenu = [
 const HeadPortrait = (props: Props) => {
   const [display, setDisplay] = useState(false);
   const [menuJson, setMenuJson]: [Array<Navigation>, Function] = useState([]);
+  const [activeMenu, setActiveMenu] = useState();
   const { isGrouping, isDraging } = useSelector((state: State) => {
     return {
       isGrouping: state?.isGrouping,
@@ -38,6 +40,15 @@ const HeadPortrait = (props: Props) => {
   const handleDrag = useCallback(() => {
     dispatch({ type: 'IS_DRAGING', data: true });
   }, [dispatch]);
+
+  function handleActiveMenu(projectInfo: any) {
+    const projectId = projectInfo;
+
+    projectInfo && setActiveMenu(projectInfo.projectId);
+  }
+
+  const { projectInfo } = useContext(projectContainerContext);
+  console.log(444, projectInfo);
 
   useEffect(() => {
     setMenuJson(defaultMenu);
@@ -94,7 +105,7 @@ const HeadPortrait = (props: Props) => {
         </div>
 
         <div style={{ marginTop: '20px' }}>
-          <Menu data={menuJson} />
+          <Menu data={menuJson} activeMenu={handleActiveMenu} />
         </div>
       </div>
       {isGrouping && (

@@ -6,7 +6,8 @@ import './Menu.scss';
 
 export interface Props {
   data: Array<Navigation>;
-  expanded?: boolean; //是否展开
+  expanded?: boolean; //是否展开,
+  activeMenu: Function;
 }
 export interface MenuType {
   projectId: string;
@@ -21,7 +22,7 @@ export interface Navigation {
 
 const Menu = (props: Props) => {
   const routerHistory = useHistory();
-  const { data, expanded = true } = props;
+  const { data, expanded = true, activeMenu } = props;
   const [showTeamMenu, setShowTeamMenu] = useState(expanded);
   const [showPersonalMenu, setShowPersonalMenu] = useState(expanded);
 
@@ -48,6 +49,7 @@ const Menu = (props: Props) => {
 
   function handleShowProject(projectInfo: Object) {
     setCurrentProjectInfo(projectInfo);
+    activeMenu(projectInfo);
   }
 
   return (

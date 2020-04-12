@@ -15,6 +15,10 @@ const ProjectItem = () => {
   const handlePictureGrouping = useCallback(() => {
     dispatch({ type: 'IS_GROUPING', data: true });
     setImgIsGrouping(true);
+    console.log(222, imgIsGrouping);
+    setTimeout(() => {
+      console.log(222, imgIsGrouping);
+    }, 0);
   }, [dispatch]);
 
   const [active, setActive] = useState(false);
@@ -24,7 +28,6 @@ const ProjectItem = () => {
   }
 
   const currentProjectId = currentProject['projectId'];
-  console.log(222, currentProjectId);
 
   const defaultProjects = {
     '1': {
@@ -44,7 +47,6 @@ const ProjectItem = () => {
       }
     }
   };
-  console.log(Object.entries(defaultProjects['1']));
   return (
     <div>
       <div className="project-group-container">

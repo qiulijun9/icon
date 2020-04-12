@@ -22,11 +22,12 @@
     align-items: center;
     width: 50%;
     height: calc(100% / 3);
-    transition: background 0.3s;
+    transition: background 0.3s ease-in 20ms;
 
     &:hover {
       background: rgba(2, 12, 14, 0.6);
       border-radius: 5px;
+      transition: background 0.3s ease-out 20ms;
     }
 
     &:hover svg.icon-tool {

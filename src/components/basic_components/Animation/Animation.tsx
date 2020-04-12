@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import './Animation.css';
 
-export type AnimationType = 'fade' | 'scale';
+export type AnimationType = 'fade' | 'scale' | 'rotate';
 
 export type AnimationTimingFunction =
   | 'linear'
@@ -57,6 +57,8 @@ interface Props {
 
 function Animation(props: Props) {
   const { display } = props;
+
+  console.log(props.type);
 
   // show 控制子元素的显隐
   const [showChildren, setShowChildren] = useState(props.display);

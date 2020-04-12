@@ -111,9 +111,9 @@ const NavigationButton = () => {
           模板代码
         </button>
       </div>
-      <div>
+      {/* <div>
         <Switch onChange={() => changerTheme()} />
-      </div>
+      </div> */}
     </div>
   );
 };
