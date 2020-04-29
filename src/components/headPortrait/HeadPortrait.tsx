@@ -42,8 +42,6 @@ const HeadPortrait = (props: Props) => {
   }, [dispatch]);
 
   function handleActiveMenu(projectInfo: any) {
-    const projectId = projectInfo;
-
     projectInfo && setActiveMenu(projectInfo.projectId);
   }
 

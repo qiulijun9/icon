@@ -10,9 +10,17 @@ const Project = () => {
   function updateProjectInfo() {
     return { newProjectId: '4343' };
   }
-
-  console.log(3333, projectInfo);
+  function getProjectList(){
+    fetch('/projects', {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  }
   useEffect(() => {
+    getProjectList();
     onChange(updateProjectInfo);
   }, []);
   return (

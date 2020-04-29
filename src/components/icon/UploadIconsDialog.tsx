@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Upload from '../basic_components/Upload/Upload';
 import Dialog from '../basic_components/Dialog/Dialog';
 import './UploadIcons.scss';
 
+interface icon {
+  name:string,
+  size:number
+}
 export interface Props {
   display: boolean;
   callback: Function;
@@ -14,7 +18,45 @@ export interface Props {
 }
 
 const UploadIconsDialog = (props: Props) => {
-  function uploadFilesCallback(files: Array<File>): void {}
+  const [files,setFiles]: [Array<File>,Function] = useState([]);
+  const [uploadIcons, setUploadIcons]:[Array<icon>, Function] = useState([]);
+  function uploadFilesCallback(files: Array<File>): void {
+     setFiles(files);
+     let newFileIcons: Array<icon> = [];
+     files.map((file)=>{
+       let fileInfo = {name:file.name,size:file.size};
+       newFileIcons.push(fileInfo);
+     })
+     setUploadIcons(newFileIcons);
+  };
+  
+
+  function fileUpload (){
+    const formData = new FormData();
+    files.map((file)=>{
+      formData.append('file', file );
+    })
+    fetch('/upload', {
+      method: 'POST',
+      body: formData,
+      // headers:{
+      //   "Content-Type": "multipart/form-data"
+      // }
+     
+    })
+      .then(res => res.json())
+      .then(data => {
+        if(data.code === 200){
+          props.callback();
+          alert("上传成功");
+        }else{
+          props.callback();
+          alert("上传失败");
+        }
+      });
+   
+   
+  }
 
   return (
     <Dialog
@@ -22,18 +64,21 @@ const UploadIconsDialog = (props: Props) => {
       title="上传图标"
       outsideClickCancel={true}
       onCancel={() => props.callback()}
+      onConfirm={() => fileUpload()}
     >
       <div className="dialog-content">
         <div className="dialog-upload">
-          <Upload accept={'image/*'} callback={uploadFilesCallback} />
+          <Upload accept={'image/*'} multiple={true}  callback={uploadFilesCallback} />
         </div>
-        <div className="progress">
-          <div className="file-progress-container">
-            {/* <div className="control">
-              <span className="file-name">dog</span>
-              <span>20m</span>
-            </div> */}
-          </div>
+        <div>
+           {
+             uploadIcons.length  && uploadIcons.map((file,index)=>(
+              <div key = {index}>
+                <span>{file.name}</span> 
+                <span>{file.size}</span> 
+              </div>
+             ))
+           }
         </div>
       </div>
     </Dialog>

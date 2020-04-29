@@ -1,7 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { State } from '../../../redux/state';
+import { useDispatch } from 'react-redux';
 import './Menu.scss';
 
 export interface Props {
@@ -21,7 +19,6 @@ export interface Navigation {
 }
 
 const Menu = (props: Props) => {
-  const routerHistory = useHistory();
   const { data, expanded = true, activeMenu } = props;
   const [showTeamMenu, setShowTeamMenu] = useState(expanded);
   const [showPersonalMenu, setShowPersonalMenu] = useState(expanded);

@@ -14,10 +14,10 @@ const CreateProjectDialog = (props: Props) => {
   const [projectName, setProjectName] = useState('');
 
   function createProject() {
-    const postData = {
-      projectName,
-      projectType
-    };
+    // const postData = {
+    //   projectName,
+    //   projectType
+    // };
     //TODO post createProject
   }
   return (

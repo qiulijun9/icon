@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ShadeIcons from '../icon/ShadeIcons';
-import { Button, Drag } from '../basic_components/index';
+import { Button } from '../basic_components/index';
 import CreateGroupDialog from '../group/CreateGroupDialog';
 
 import './ProjectItem.scss';
@@ -15,7 +15,6 @@ const ProjectItem = () => {
   const handlePictureGrouping = useCallback(() => {
     dispatch({ type: 'IS_GROUPING', data: true });
     setImgIsGrouping(true);
-    console.log(222, imgIsGrouping);
     setTimeout(() => {
       console.log(222, imgIsGrouping);
     }, 0);
@@ -38,7 +37,7 @@ const ProjectItem = () => {
         ]
       },
       group2: {
-        imgs: [{ src: '/img/dog.jpg', imgName: 'wers', size: '20' }]
+        imgs: [{ src: '/img/house.jpeg', imgName: 'house.jpeg', size: '20' }]
       }
     },
     '2': {
@@ -87,15 +86,11 @@ const ProjectItem = () => {
           >
             <div className="icon-container">
               <img className="icon" src="/img/dog.jpg" alt="img" draggable={false} />
-              {!imgIsGrouping && <ShadeIcons />}
+              {!imgIsGrouping && <ShadeIcons fileName="dog.jpg"/>}
             </div>
           </figure>
         </div>
         {/* </Drag> */}
-        {/* {defaultProjects['1'].keys(item => {
-          return <div>dd</div>;
-        })} */}
-
         {currentProjectId &&
           Object.entries(defaultProjects[currentProjectId]).map((item, index) => {
             return (
@@ -127,7 +122,7 @@ const ProjectItem = () => {
                               draggable={false}
                             />
                             {img.imgName}
-                            {!imgIsGrouping && <ShadeIcons />}
+                            {!imgIsGrouping && <ShadeIcons fileName={img.imgName}/>}
                           </div>
                         </figure>
                       );

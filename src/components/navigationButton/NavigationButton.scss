@@ -20,7 +20,107 @@
 
 
   }
+  .item-container{
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid red;
+    width: 100%;
+    list-style: none;
+  }
+  .item{
+    width: calc(calc(100% / 3) - 10px);
+    border: 1px solid black;
+    height: 50px;
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .wrapper{
+    display: flex;
+    flex:1;
+  }
+  .ite{
+    flex:1;
+    border: 1px solid black;
+  }
 
+  .flex {
+    width: 500px;
+    margin: 10px;
+    height: 300px;
+    border: 2px solid #9a9a9a;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap; /* 使flex容器一行放不下子项换行*/
+    align-items: center;
+    }
+    .flex div {
+    width: 100px;
+    margin: 5px;
+    }
+    .i1 {
+    background-color: #ffb685;
+    height: 130px;
+    }
+    .i2 {
+    background-color: #fff7b1;
+    height: 50px;
+    width: 120px;
+    }
+    .i3 {
+    background-color: #b1ffc8;
+    height: 100px;
+    }
+    .i4 {
+    background-color: #b1ccff;
+    height: 60px;
+    }
+    .i5 {
+    background-color: #c8b1ff;
+    height: 40px;
+    }
+    .i6 {
+    background-color: #ffb1e5;
+    height: 80px;
+    }
+
+    .left{
+      width: 100px;
+      height: 150px;
+      float: left;
+      background: #f66;
+    }
+    .right{
+       height: 200px;
+       background-color: #3ebcee;
+       overflow: hidden;
+    }
+    .parent{
+     border: 5px solid red;
+     width: 300px;
+    }
+    .child{
+     width: 100px;
+     height: 100px;
+     border: #ffb685 2px solid;
+     float: left;
+    }
+    .parent::after{
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .p-container p{
+      color: #f55;
+      background: #fcc;
+      width: 200px;
+      line-height: 100px;
+      text-align:center;
+      margin: 100px;
+    }
 
 
 }

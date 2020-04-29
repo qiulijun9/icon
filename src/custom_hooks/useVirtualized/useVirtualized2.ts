@@ -29,68 +29,65 @@ export interface RV<T> {
   };//第二层div
 }
 
-function useVirtualized<T = any>(items: Array<T>, options: Options): RV<T> {
+function useVirtualized2<T = any>(items: Array<T>, options: Options): RV<T>{
   const { itemHeight, renderCount = 10, delay = 100 } = options;
-
-  // 缓存每个项目对应的 paddingTop 值, 多出最后一个值即为总高度
   const [paddingTopCache, setPaddingTopCache] = useState<Array<number>>([]);
   useEffect(() => {
-    let paddingTopCache = [];
-    if (typeof itemHeight === 'number') {
-      paddingTopCache = items.reduce(
+    let catcheList = [];
+    if(typeof itemHeight === "number"){
+      catcheList = items.reduce(
         (result, _, index) => {
           result.push((index + 1) * itemHeight);
           return result;
         },
         [0]
       );
-    } else {
-      paddingTopCache = items.reduce(
+    }else{
+      catcheList = items.reduce(
         (result, _, index) => {
-          result.push(result[index] + itemHeight(index));
+          result.push(result[index] + itemHeight(index))
           return result;
-        },
-        [0]
-      );
+        },[0]
+      )
     }
-    setPaddingTopCache(paddingTopCache);
-  }, [items, itemHeight]);
+    
 
-  // 检测是否处于滚动状态
-  const [isScrolling, setIsScrolling] = useState(false);
-  const { run } = useDebounce(() => setIsScrolling(false), delay);
+    setPaddingTopCache(catcheList);
+  },[items,itemHeight])
 
-  // 滚动时更新 startIndex
-  const [startIndex, setStartIndex] = useState(0);
+  const [ isScrolling, setIsScrolling] = useState(false);
+  
+  const [ startIndex, setStartIndex] = useState(0);
+  const {run} = useDebounce(()=>{setIsScrolling(false)},delay)
   const handleScroll = useCallback(
-    (e: any) => {
+    (e: any) =>{
       e.preventDefault();
       run();
       if (Math.abs(e.target.scrollTop - paddingTopCache[startIndex]) > 0) {
         let newStartIndex = 0;
-        if (typeof itemHeight === 'number') {
-          newStartIndex = Math.floor(e.target.scrollTop / itemHeight);
-        } else {
-          // 二分查找对应 startIndex
-          const searchResult = binarySearch(paddingTopCache, e.target.scrollTop);
-          if (Array.isArray(searchResult)) {
+        if(typeof itemHeight === "number"){
+        newStartIndex = Math.floor(e.target.scrollTop / itemHeight)
+        }else{
+          const searchResult = binarySearch(paddingTopCache,e.target.scrollTop);
+          if(Array.isArray(searchResult)){
             newStartIndex = Math.min(...searchResult);
-          } else {
+          }else{
             newStartIndex = searchResult;
           }
+
         }
+        
         setStartIndex(newStartIndex);
         setIsScrolling(true);
       }
-    },
-    [itemHeight, paddingTopCache, run, startIndex]
-  );
-
+    },[itemHeight, paddingTopCache,run, startIndex]
+  )
+  
   return {
     isScrolling,
     startIndex,
-    endIndex: startIndex + renderCount,
-    list: items.slice(startIndex, startIndex + renderCount),
+    endIndex: startIndex +renderCount,
+    list:items.slice(startIndex,startIndex +renderCount),
     containerProps: {
       onScroll: handleScroll,
       style: { overflowY: 'auto' }
@@ -103,14 +100,7 @@ function useVirtualized<T = any>(items: Array<T>, options: Options): RV<T> {
         paddingTop: paddingTopCache[startIndex]
       }
     }
-  };
+  }
 }
 
-export default useVirtualized;
-
-/**
- * 1.需要一个可视窗口，里面放固定个数的item
- * 2. 外面需要一个container,放所有的items
- * 3.根据itemHeight,计算出每个item 的top值放入paddingTopCache 缓存
- * 4. 根据container ScrollTop 和item 每一项的top值计算可视窗口该展示的items ,然后在返回startIndex 和endIndex
- */
+export default useVirtualized2;

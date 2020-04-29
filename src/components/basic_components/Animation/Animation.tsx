@@ -58,8 +58,6 @@ interface Props {
 function Animation(props: Props) {
   const { display } = props;
 
-  console.log(props.type);
-
   // show 控制子元素的显隐
   const [showChildren, setShowChildren] = useState(props.display);
 

@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import Dialog from '../basic_components/Dialog/Dialog';
 import { useCopy } from '../../custom_hooks/index';
+import { serverPath } from  '../../config/index';
 import './ShadeIcons.scss';
 
-const ShadeIcons = () => {
+
+interface Props {
+  fileName: string
+}
+
+const ShadeIcons = (props:Props) => {
+  const { fileName } = props;
   const copyCode = useCopy();
   const [showIconZoomDialog, setShowIconZoomDialog] = useState(false);
   const [showDeleteIconDialog, setShowDeleteIconDialog] = useState(false);
 
   function handleDownload() {
-    // window.open(`${serverPath}/batchDownload?path=${props.link}`, '_self');
-    window.open(`http://www.baidu.com/img/baidu_jgylogo3.gif`, '_blank');
+    window.open(`${serverPath}/download/${fileName}`, '_self');
   }
 
   function handleCopyCode() {
