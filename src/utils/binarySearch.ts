@@ -9,8 +9,8 @@ function binarySearch<T extends any>(arr: Array<T>, target: T): RV {
     if (arr[index] === target) return index;
     if (arr[index] > target) {
       end = index - 1;
-    } else {
-      start = index + 1;
+    } else { 
+       start = index + 1;
     }
   }
   return [end, start];

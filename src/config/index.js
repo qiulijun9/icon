@@ -1,1 +1,1 @@
-export const serverPath = 'http://localhost:8001';
+export const serverPath = 'http://localhost:8000';

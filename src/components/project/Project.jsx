@@ -10,9 +10,12 @@ const Project = () => {
   function updateProjectInfo() {
     return { newProjectId: '4343' };
   }
-  function getProjectList(){
+  function getProjectList() {
     fetch('/projects', {
       method: 'GET',
+      headers: {
+        Authorization: localStorage.getItem('token'),
+      },
     })
       .then(res => res.json())
       .then(data => {

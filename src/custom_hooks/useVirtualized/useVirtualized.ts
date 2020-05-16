@@ -5,20 +5,20 @@ import binarySearch from '../../utils/binarySearch';
 export type ItemHeight = number | ((index: number) => number);
 
 export interface Options {
-  itemHeight: ItemHeight;//每项的高度
-  renderCount?: number;//渲染item的个数
-  delay?: number;//滚动的延迟时间
+  itemHeight: ItemHeight; //每项的高度
+  renderCount?: number; //渲染item的个数
+  delay?: number; //滚动的延迟时间
 }
 
 export interface RV<T> {
-  isScrolling: boolean;//是否触发滚动
-  startIndex: number;//开始渲染的下标
-  endIndex: number;//结束渲染的下标
-  list: Array<T>;//渲染的的列表
+  isScrolling: boolean; //是否触发滚动
+  startIndex: number; //开始渲染的下标
+  endIndex: number; //结束渲染的下标
+  list: Array<T>; //渲染的的列表
   containerProps: {
     onScroll: (e: any) => void;
     style: { overflowY: 'auto' };
-  };//外层div
+  }; //外层div
   wrapperProps: {
     style: {
       boxSizing: 'border-box';
@@ -26,7 +26,7 @@ export interface RV<T> {
       height: number;
       paddingTop: number;
     };
-  };//第二层div
+  }; //第二层div
 }
 
 function useVirtualized<T = any>(items: Array<T>, options: Options): RV<T> {
@@ -93,16 +93,16 @@ function useVirtualized<T = any>(items: Array<T>, options: Options): RV<T> {
     list: items.slice(startIndex, startIndex + renderCount),
     containerProps: {
       onScroll: handleScroll,
-      style: { overflowY: 'auto' }
+      style: { overflowY: 'auto' },
     },
     wrapperProps: {
       style: {
         boxSizing: 'border-box',
         width: '100%',
         height: paddingTopCache[items.length],
-        paddingTop: paddingTopCache[startIndex]
-      }
-    }
+        paddingTop: paddingTopCache[startIndex],
+      },
+    },
   };
 }
 
@@ -113,4 +113,5 @@ export default useVirtualized;
  * 2. 外面需要一个container,放所有的items
  * 3.根据itemHeight,计算出每个item 的top值放入paddingTopCache 缓存
  * 4. 根据container ScrollTop 和item 每一项的top值计算可视窗口该展示的items ,然后在返回startIndex 和endIndex
+ * 5. 通过startIndex 和endIndex ，返回截取的items元素 items.slice(startIndex,endIndex)
  */

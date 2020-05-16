@@ -5,20 +5,20 @@ import binarySearch from '../../utils/binarySearch';
 export type ItemHeight = number | ((index: number) => number);
 
 export interface Options {
-  itemHeight: ItemHeight;//每项的高度
-  renderCount?: number;//渲染item的个数
-  delay?: number;//滚动的延迟时间
+  itemHeight: ItemHeight; //每项的高度
+  renderCount?: number; //渲染item的个数
+  delay?: number; //滚动的延迟时间
 }
 
 export interface RV<T> {
-  isScrolling: boolean;//是否触发滚动
-  startIndex: number;//开始渲染的下标
-  endIndex: number;//结束渲染的下标
-  list: Array<T>;//渲染的的列表
+  isScrolling: boolean; //是否触发滚动
+  startIndex: number; //开始渲染的下标
+  endIndex: number; //结束渲染的下标
+  list: Array<T>; //渲染的的列表
   containerProps: {
     onScroll: (e: any) => void;
     style: { overflowY: 'auto' };
-  };//外层div
+  }; //外层div
   wrapperProps: {
     style: {
       boxSizing: 'border-box';
@@ -26,15 +26,15 @@ export interface RV<T> {
       height: number;
       paddingTop: number;
     };
-  };//第二层div
+  }; //第二层div
 }
 
-function useVirtualized2<T = any>(items: Array<T>, options: Options): RV<T>{
+function useVirtualized2<T = any>(items: Array<T>, options: Options): RV<T> {
   const { itemHeight, renderCount = 10, delay = 100 } = options;
   const [paddingTopCache, setPaddingTopCache] = useState<Array<number>>([]);
   useEffect(() => {
     let catcheList = [];
-    if(typeof itemHeight === "number"){
+    if (typeof itemHeight === 'number') {
       catcheList = items.reduce(
         (result, _, index) => {
           result.push((index + 1) * itemHeight);
@@ -42,65 +42,69 @@ function useVirtualized2<T = any>(items: Array<T>, options: Options): RV<T>{
         },
         [0]
       );
-    }else{
+    } else {
       catcheList = items.reduce(
         (result, _, index) => {
-          result.push(result[index] + itemHeight(index))
+          result.push(result[index] + itemHeight(index));
           return result;
-        },[0]
-      )
+        },
+        [0]
+      );
     }
-    
 
     setPaddingTopCache(catcheList);
-  },[items,itemHeight])
+  }, [items, itemHeight]);
 
-  const [ isScrolling, setIsScrolling] = useState(false);
-  
-  const [ startIndex, setStartIndex] = useState(0);
-  const {run} = useDebounce(()=>{setIsScrolling(false)},delay)
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  const [startIndex, setStartIndex] = useState(0);
+  const { run } = useDebounce(() => {
+    setIsScrolling(false);
+  }, delay);
   const handleScroll = useCallback(
-    (e: any) =>{
+    (e: any) => {
       e.preventDefault();
       run();
+
       if (Math.abs(e.target.scrollTop - paddingTopCache[startIndex]) > 0) {
         let newStartIndex = 0;
-        if(typeof itemHeight === "number"){
-        newStartIndex = Math.floor(e.target.scrollTop / itemHeight)
-        }else{
-          const searchResult = binarySearch(paddingTopCache,e.target.scrollTop);
-          if(Array.isArray(searchResult)){
+        if (typeof itemHeight === 'number') {
+          newStartIndex = Math.floor(e.target.scrollTop / itemHeight);
+        } else {
+          const searchResult = binarySearch(paddingTopCache, e.target.scrollTop);
+          if (Array.isArray(searchResult)) {
             newStartIndex = Math.min(...searchResult);
-          }else{
+          } else {
             newStartIndex = searchResult;
           }
-
         }
-        
+        console.log(e.target.scrollTop, newStartIndex);
+
         setStartIndex(newStartIndex);
         setIsScrolling(true);
       }
-    },[itemHeight, paddingTopCache,run, startIndex]
-  )
-  
+    },
+    [itemHeight, paddingTopCache, run, startIndex]
+  );
+
   return {
     isScrolling,
     startIndex,
-    endIndex: startIndex +renderCount,
-    list:items.slice(startIndex,startIndex +renderCount),
+    endIndex: startIndex + renderCount,
+    list: items.slice(startIndex, startIndex + renderCount),
     containerProps: {
       onScroll: handleScroll,
-      style: { overflowY: 'auto' }
+      style: { overflowY: 'auto' },
     },
     wrapperProps: {
       style: {
         boxSizing: 'border-box',
         width: '100%',
         height: paddingTopCache[items.length],
-        paddingTop: paddingTopCache[startIndex]
-      }
-    }
-  }
+        paddingTop: paddingTopCache[startIndex],
+      },
+    },
+  };
 }
 
 export default useVirtualized2;
